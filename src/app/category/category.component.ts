@@ -2,16 +2,12 @@ import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'category',
-  template: `
-    <div>
-      {{name}}
-    </div>
-  `,
+  template: ``,
   styles: [
 
   ]
 })
 export class CategoryComponent {
-  @Input() level = 1
-  @Input() name = "" 
+  // @Input() level = 1
+  // @Input() name = "" 
 }

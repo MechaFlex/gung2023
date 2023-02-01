@@ -4,21 +4,22 @@
     <h2>Product Display</h2>
   </header>
   <div class="search-wrapper">
-    <app-search/>
-    <app-sort/>
+    <app-search />
+    <app-sort />
   </div>
   <ul class="categories">
-    <li *ngFor="let category of productPage.children">
-
-      <category [level]=1 [name]=category.name/>
-
-      <li *ngFor="let subcategory of this.category.children">
-        <category [level]=2 [name]=category.name/>
-          <li *ngFor="let item of subcategory.children">
-            <category [level]=3 [name]=category.name/>
-          </li>
-      </li>
-      
+    <li *ngFor="let maincategory of productPage.children">
+      <h3>{{maincategory.name}}</h3>
+      <ul>
+        <li *ngFor="let subcategory of maincategory.children">
+          <h4>{{subcategory.name}}</h4>
+          <ul>
+            <li *ngFor="let item of subcategory.children">
+              <h5>{{item.name}}</h5>
+            </li>
+          </ul>
+        </li>
+      </ul>
     </li>
   </ul>
 </main>
