@@ -15,7 +15,8 @@
           <h4>{{subcategory.name}}</h4>
           <ul>
             <li *ngFor="let item of subcategory.children">
-              <h5>{{item.name}}</h5>
+              <h5>{{item.name}}</h5><h6>({{item.id}})</h6>
+              <p class="extras">{{getExtras(item.id)}}</p>
             </li>
           </ul>
         </li>
