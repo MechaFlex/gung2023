@@ -1,11 +1,13 @@
 <main>
   <header>
-    <img class="logo" src="assets/images/gung-white.png" alt="logo" />
-    <h2>Product Display</h2>
+    <div class="header-image">
+      <img style="max-width: 100%;" src="assets/images/gung-white.png" alt="logo" />
+    </div>
+    <h2 class="header-text">Product Display</h2>
   </header>
   <div class="search-wrapper">
-    <app-search />
-    <app-sort />
+    <search />
+    <sort />
   </div>
   <ul class="categories">
     <li *ngFor="let maincategory of productPage.children">

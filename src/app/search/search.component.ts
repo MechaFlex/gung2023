@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-search',
+  selector: 'search',
   template: `
-    <input type="text" placeholder="Search" class="form-control">
+    <input type="text" placeholder="Search" class="form-control"/>
 
     <style>
       input {
