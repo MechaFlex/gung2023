@@ -3,5 +3,22 @@
     <img class="logo" src="assets/images/gung-white.png" alt="logo" />
     <h2>Product Display</h2>
   </header>
-  <app-category></app-category>
+  <div class="search-wrapper">
+    <app-search/>
+    <app-sort/>
+  </div>
+  <ul class="categories">
+    <li *ngFor="let category of productPage.children">
+
+      <category [level]=1 [name]=category.name/>
+
+      <li *ngFor="let subcategory of this.category.children">
+        <category [level]=2 [name]=category.name/>
+          <li *ngFor="let item of subcategory.children">
+            <category [level]=3 [name]=category.name/>
+          </li>
+      </li>
+      
+    </li>
+  </ul>
 </main>

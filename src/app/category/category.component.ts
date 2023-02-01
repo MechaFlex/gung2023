@@ -1,10 +1,17 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'app-category',
-  templateUrl: './category.component.html',
-  styleUrls: ['./category.component.css']
+  selector: 'category',
+  template: `
+    <div>
+      {{name}}
+    </div>
+  `,
+  styles: [
+
+  ]
 })
 export class CategoryComponent {
-
+  @Input() level = 1
+  @Input() name = "" 
 }

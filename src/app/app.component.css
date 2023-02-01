@@ -10,6 +10,9 @@ main {
 header {
   display: flex;
   justify-content: space-around;
+  align-items: center;
+  gap: 2em;
+  padding-top: 2em;
 }
 
 .logo {
@@ -19,4 +22,12 @@ header {
 h2 {
   font-size: 1.5em;
   font-weight: 200;
+}
+
+.search-wrapper {
+  display: flex;
+}
+
+li {
+  display: block;
 }
