@@ -10,7 +10,7 @@
     <sort />
   </div>
   <ul class="categories">
-    <li *ngFor="let maincategory of productPage.children">
+    <li *ngFor="let maincategory of productPage.children" ngIf="">
       <h3>{{maincategory.name}}</h3>
       <ul>
         <li *ngFor="let subcategory of maincategory.children">
@@ -18,11 +18,13 @@
           <ul>
             <li *ngFor="let item of subcategory.children">
               <h5>{{item.name}}</h5><h6>({{item.id}})</h6>
-              <p class="extras">{{getExtras(item.id)}}</p>
+              <p class="extras">{{formatExtras(getExtras(item.id))}}</p>
             </li>
           </ul>
         </li>
       </ul>
     </li>
+
+
   </ul>
 </main>

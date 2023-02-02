@@ -10,7 +10,12 @@ import { Product, ProductService } from 'src/services/product.service'
 export class AppComponent {
   title = 'gung2023';
   productPage: Category
-  categoriesWithProducts: any
+  allProducts: {
+    name: string,
+    id: string,
+    extra: string,
+    category: string,
+  }[] = []
 
   constructor() {
     let categories: Category[] = []
@@ -18,23 +23,19 @@ export class AppComponent {
     this.productPage = categories[0]
     console.log(this.productPage.children)
 
-    // this.categoriesWithProducts = this.productPage.children.map(category => {
-    //   return {
-    //     ...category,
-    //     children: category.children.map(subcategory => {
-    //       return {
-    //         ...subcategory,
-    //         children: subcategory.children.map(product => {
-    //           return {
-    //             ...product,
-    //             extra: this.getExtras(product.id)
-    //           }
-    //         })
-    //       }
-    //     })
-    //   }
-    // })
-    // console.log(this.categoriesWithProducts)
+    this.productPage.children.forEach(category => {
+      category.children.forEach(subcategory => {
+        subcategory.children.forEach(product => {
+          this.allProducts.push({
+            name: product.name,
+            id: product.id,
+            extra: this.getExtras(product.id),
+            category: subcategory.name
+          })
+        })
+      })
+    })
+    console.log(this.allProducts)
   }
 
   getExtras(id: string) {
@@ -47,7 +48,11 @@ export class AppComponent {
 
     const product = products[0]
 
-    return JSON.stringify(product.extra, null, 1).replace(/"/g, '').slice(1, -1)
+    return JSON.stringify(product.extra, null, 1)
+  }
+
+  formatExtras(extras: string): string {
+    return extras.replace(/"/g, '').slice(1, -1)
   }
 
   // getExtras(id: string) {
@@ -66,4 +71,6 @@ export class AppComponent {
   // formatExtras(extras: { [s: string]: any }): string {
   //   return JSON.stringify(extras, null, 1).replace(/"/g, '').slice(1, -1)
   // }
+
+  
 }
