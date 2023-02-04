@@ -68,6 +68,7 @@ export type SortParams = {
         padding: 1em;
         background-color: #282841;
         top: 3em;
+        right: 0em;
         z-index: 10;
       }
 
