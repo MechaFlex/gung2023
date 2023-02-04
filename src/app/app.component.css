@@ -3,18 +3,15 @@ main {
   flex-direction: column;
   align-items: center;
   width: 100%;
-
-  border: 2px solid red;
-
   color: #c9e9ff;
 }
 
 header {
   display: flex;
-  justify-content: space-around;
-  align-items: center;
+  flex-direction: row;
+  justify-content: space-evenly;
   padding-top: 2em;
-  width: clamp(300px, 90%, 500px);
+  width: clamp(200px, 90%, 400px);
 }
 
 .header-image {
@@ -22,8 +19,8 @@ header {
 }
 
 .header-text {
-  flex: 1;
-  text-align: center;
+  flex: 2;
+  text-align: end;
 }
 
 h2 {

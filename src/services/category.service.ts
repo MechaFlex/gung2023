@@ -34,7 +34,7 @@ export class CategoryService {
 
     const populateProducts = function (n: number) {
       const children = [];
-      for (let i = 0; i < 100000; i++) {
+      for (let i = 0; i < 100; i++) {
         children.push({
           id: 'RAND_' + n + '_' + i,
           name: 'Product ' + n + '_' + i,
@@ -44,7 +44,7 @@ export class CategoryService {
       return children;
     };
 
-    for (let n = 0; n < 5; n++) {
+    for (let n = 0; n < 10; n++) {
       const child = {
         id: 'sRand0' + n,
         name: 'Random category ' + n,

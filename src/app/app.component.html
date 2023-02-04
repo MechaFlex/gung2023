@@ -6,25 +6,34 @@
     <h2 class="header-text">Product Display</h2>
   </header>
   <div class="search-wrapper">
-    <search />
-    <sort />
+    <search (searchEvent)="setQuery($event)"/>
+    <sort (sortEvent)="setFilters($event)"/>
   </div>
-  <ul class="categories">
-    <li *ngFor="let maincategory of productPage.children" ngIf="">
+
+  <ul class="categories" *ngIf="noQuery">
+    <li *ngFor="let maincategory of productPage.children">
       <h3>{{maincategory.name}}</h3>
       <ul>
         <li *ngFor="let subcategory of maincategory.children">
           <h4>{{subcategory.name}}</h4>
           <ul>
             <li *ngFor="let item of subcategory.children">
-              <h5>{{item.name}}</h5><h6>({{item.id}})</h6>
-              <p class="extras">{{formatExtras(getExtras(item.id))}}</p>
+              <h5>{{getProduct(item.id).name}}</h5><h6>({{item.id}})</h6>
+              <p class="extras">{{formatExtras(getProduct(item.id).extra)}}</p>
             </li>
           </ul>
         </li>
       </ul>
     </li>
+  </ul>
 
-
+  <ul class="categories" *ngIf="!noQuery">
+    <div *ngIf="shownProducts.length === 0" style="opacity: 0.5;">
+      No items to show
+    </div>
+    <li *ngFor="let product of shownProducts">
+      <h5>{{product.name}}</h5><h6>({{product.id}})</h6><h6>{{product.category}}</h6>
+      <p class="extras">{{formatExtras(product.extra)}}</p>
+    </li>
   </ul>
 </main>

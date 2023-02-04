@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'search',
   template: `
-    <input type="text" placeholder="Search" class="form-control"/>
+    <input type="text" id="search" placeholder="Search" class="form-control" (input)="emitSearchQuery()"/>
 
     <style>
       input {
@@ -20,5 +20,10 @@ import { Component } from '@angular/core';
   `
 })
 export class SearchComponent {
+  @Output() searchEvent = new EventEmitter<string>()
 
+  emitSearchQuery() {
+    const query = (document.getElementById("search") as HTMLInputElement)?.value
+    return this.searchEvent.emit(query)
+  }
 }
