@@ -2,6 +2,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
 
 export type SortParams = {
     orderBy: string,
+    ascending: boolean,
     filters: {
       inStock: boolean,
       hasCategory: boolean,
@@ -23,13 +24,16 @@ export type SortParams = {
             <input (click)="setSortParams()" type="radio" checked="true" name="order" id="none"><label for="none">Nothing</label>
           </div>
           <div>
-            <input (click)="setSortParams()" type="radio" name="order" id="name"><label for="name">Name</label>
+            <input (click)="setSortParams(true)" type="radio" name="order" id="name"><label for="name">Name</label>
+            <span *ngIf="isChecked('name')">{{getSortDirection()}}</span>
           </div>
           <div>
-            <input (click)="setSortParams()" type="radio" name="order" id="id"><label for="id">ID</label>
+            <input (click)="setSortParams(true)" type="radio" name="order" id="id"><label for="id">ID</label>
+            <span *ngIf="isChecked('id')">{{getSortDirection()}}</span>
           </div>
           <div>
-            <input (click)="setSortParams()" type="radio" name="order" id="price"><label for="price">Price</label>
+            <input (click)="setSortParams(true)" type="radio" name="order" id="price"><label for="price">Price</label>
+            <span *ngIf="isChecked('price')">{{getSortDirection()}}</span>
           </div>
         </div>
 
@@ -43,10 +47,10 @@ export type SortParams = {
           </div>
           Volume in range
           <div style="display: flex;">
-            <input (change)="setSortParams()" type="checkbox" id="inRange">
-            <input (input)="setSortParams()" type="number" id="rangeMin" class="form-control form-control-sm range">
+            <input (change)="setSortParams();enableRange()" type="checkbox" id="inRange">
+            <input (input)="setSortParams()" disabled type="number" id="rangeMin" class="form-control form-control-sm range">
             to
-            <input (input)="setSortParams()" type="number" id="rangeMax" class="form-control form-control-sm range">
+            <input (input)="setSortParams()" disabled type="number" id="rangeMax" class="form-control form-control-sm range">
           </div>
         </div>
       </div>
@@ -74,6 +78,7 @@ export type SortParams = {
 
       .controls {
         padding-left: 1em;
+        padding-bottom: 1em;
       }
 
       label {
@@ -85,6 +90,11 @@ export type SortParams = {
         margin-left: 0.5em;
         margin-right: 0.5em;
       }
+
+      span {
+        padding-left: 0.4em;
+        font-size: 0.7em;
+      }
     </style>
   `
 })
@@ -92,8 +102,11 @@ export class SortComponent {
 
   isShown = false
 
+  ascending = true
+
   sortParams: SortParams = {
     orderBy: "none",
+    ascending: this.ascending,
     filters: {
       inStock: false,
       hasCategory: false,
@@ -117,17 +130,27 @@ export class SortComponent {
     }
   }
 
-  setSortParams() {
+  isChecked(id: string) {
+    return (document.getElementById(id) as HTMLInputElement)?.checked || false
+  }
+
+  setSortParams(swapAscending = false) {
+    const currentOrderBy = this.sortParams.orderBy
     const orderBy = (document.querySelector('input[name="order"]:checked') as HTMLInputElement)?.id || "none"
 
-    const isChecked = (id: string) => (document.getElementById(id) as HTMLInputElement)?.checked || false
+    if (orderBy === "none") {
+      this.ascending = true
+    } else if (currentOrderBy === orderBy && swapAscending) {
+      this.ascending = !this.ascending
+    }
 
     const params: SortParams = {
       orderBy: orderBy,
+      ascending: this.ascending,
       filters: {
-        inStock: isChecked("inStock"),
-        hasCategory: isChecked("hasCategory"),
-        inRange: isChecked("inRange"),
+        inStock: this.isChecked("inStock"),
+        hasCategory: this.isChecked("hasCategory"),
+        inRange: this.isChecked("inRange"),
         rangeMin: (document.getElementById("rangeMin") as HTMLInputElement)?.valueAsNumber || 0,
         rangeMax: (document.getElementById("rangeMax") as HTMLInputElement)?.valueAsNumber || 0
       }
@@ -136,5 +159,16 @@ export class SortComponent {
     this.sortParams = params
     console.log(this.sortParams)
     this.sortEvent.emit(this.sortParams)
+  }
+
+  getSortDirection() {
+    return this.ascending ? "Ascending" : "Descending"
+  }
+
+  enableRange() {
+    const isChecked = () => (document.getElementById("inRange") as HTMLInputElement)?.checked || false;
+
+    (document.getElementById("rangeMin") as HTMLInputElement).disabled = !isChecked();
+    (document.getElementById("rangeMax") as HTMLInputElement).disabled = !isChecked();
   }
 }

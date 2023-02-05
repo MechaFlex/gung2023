@@ -7,7 +7,7 @@ type ProductWithCategory = {
   name: string,
   id: string,
   extra: string,
-  category: string,
+  category?: string,
 }
 
 @Component({
@@ -30,6 +30,7 @@ export class AppComponent {
   // Contains the current filters
   sortParams: SortParams = {
     orderBy: "none",
+    ascending: true,
     filters: {
       inStock: false,
       hasCategory: false,
@@ -145,12 +146,15 @@ export class AppComponent {
     } else if (this.sortParams.orderBy === "price") {
       productsToShow = productsToShow.sort((a, b) => this.getAGA(a).PRI > this.getAGA(b).PRI ? 1 : 0)
     }
+    if (!this.sortParams.ascending && this.sortParams.orderBy !== "none") {
+      productsToShow = productsToShow.reverse()
+    }
 
     if (f.inStock) {
       productsToShow = productsToShow.filter(product => this.getAGA(product).LGA > 0)
     }
     if (f.hasCategory) {
-      productsToShow = productsToShow.filter(product => product.category !== null)
+      productsToShow = productsToShow.filter(product => !product.category)
     }
     if (f.inRange) {
       productsToShow = productsToShow.filter(product => {
