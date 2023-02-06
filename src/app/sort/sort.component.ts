@@ -47,10 +47,10 @@ export type SortParams = {
           </div>
           Volume in range
           <div style="display: flex;">
-            <input (change)="setSortParams();enableRange()" type="checkbox" id="inRange">
-            <input (input)="setSortParams()" disabled type="number" id="rangeMin" class="form-control form-control-sm range">
+            <input (change)="setSortParams(); enableRange()" type="checkbox" id="inRange">
+            <input (input)="setSortParams()" disabled [defaultValue]="0" type="number" id="rangeMin" class="form-control form-control-sm range">
             to
-            <input (input)="setSortParams()" disabled type="number" id="rangeMax" class="form-control form-control-sm range">
+            <input (input)="setSortParams()" disabled [defaultValue]="10" type="number" id="rangeMax" class="form-control form-control-sm range">
           </div>
         </div>
       </div>
